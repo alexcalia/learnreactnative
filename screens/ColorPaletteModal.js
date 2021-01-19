@@ -1,12 +1,66 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import React, { useState, useCallback } from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+  Switch,
+  Alert,
+} from 'react-native';
 
 const AddNewPaletteModal = () => {
+  const [name, setName] = useState('');
+  const handleSubmit = useCallback(() => {
+    if (!name) {
+      Alert.alert('Please enter a palette name');
+    }
+  }, [name]);
+
   return (
-    <View>
+    <View style={styles.container}>
+      <Text style={styles.name}>Name of the palette</Text>
+      <TextInput
+        style={styles.input}
+        value={name}
+        onChangeText={setName}
+        placeholder="Palette Name"
+      />
+      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+        <Text style={styles.buttonText}>Submit</Text>
+      </TouchableOpacity>
       <Text>Hello, world!</Text>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  input: {
+    borderColor: 'grey',
+    borderWidth: 1,
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 50,
+  },
+  container: {
+    padding: 10,
+    backgroundColor: 'white',
+    flex: 1,
+  },
+  button: {
+    backgroundColor: 'teal',
+    height: 40,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  name: {
+    marginBottom: 10,
+  },
+});
 
 export default AddNewPaletteModal;
