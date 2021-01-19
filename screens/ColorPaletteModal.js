@@ -7,13 +7,20 @@ import {
   TouchableOpacity,
   Switch,
   Alert,
+  FlatList,
 } from 'react-native';
 
-const AddNewPaletteModal = () => {
+const ColorPaletteModal = ({ navigation }) => {
   const [name, setName] = useState('');
   const handleSubmit = useCallback(() => {
     if (!name) {
       Alert.alert('Please enter a palette name');
+    } else {
+      const newColorPalette = {
+        paletteName: name,
+        colors: [],
+      };
+      navigation.navigate('Home', { newColorPalette });
     }
   }, [name]);
 
@@ -26,6 +33,10 @@ const AddNewPaletteModal = () => {
         onChangeText={setName}
         placeholder="Palette Name"
       />
+      <View style={styles.color}>
+        <Text>Color Name</Text>
+        <Switch value={true} onValueChange={() => {}} />
+      </View>
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
         <Text style={styles.buttonText}>Submit</Text>
       </TouchableOpacity>
@@ -61,6 +72,14 @@ const styles = StyleSheet.create({
   name: {
     marginBottom: 10,
   },
+  color: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: 'grey',
+  },
 });
 
-export default AddNewPaletteModal;
+export default ColorPaletteModal;
